@@ -1,0 +1,8 @@
+EXYZH
+[Z]     [Y]     [X]
+[A]     [B]     [D]
+[E] [F] [L] [G] [H]
+ 1   2   3   4   5
+
+move 2 from 5 to 2
+move 2 from 1 to 4

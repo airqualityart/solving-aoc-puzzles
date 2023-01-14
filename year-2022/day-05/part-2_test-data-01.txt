@@ -1,0 +1,7 @@
+EZCH
+[Z]
+[A]     [C]
+[E] [F] [G] [H]
+ 1   2   3   4
+
+move 2 from 1 to 2

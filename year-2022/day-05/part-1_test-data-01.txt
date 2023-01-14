@@ -1,0 +1,6 @@
+EACH
+[A]     [C]
+[E] [F] [G] [H]
+ 1   2   3   4
+
+move 1 from 1 to 2
