@@ -1,0 +1,5 @@
+# Do not add the binaries
+year-*/day-*/part-*.out
+
+# Do not add the puzzles' actual input data
+year-*/day-*/part-*_input-data.txt
