@@ -1,0 +1,17 @@
+37
+$ cd /
+$ ls
+dir dir_one
+dir dir_two
+dir dir_three
+7 file_at_root
+$ cd dir_one
+$ ls
+123456789 toobig
+$ cd ..
+$ cd dir_two
+$ ls
+25 file3.txt
+$ cd ..
+$ cd dir_three
+12 file4.txt

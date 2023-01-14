@@ -1,0 +1,17 @@
+10000000
+$ cd /
+$ ls
+dir dir_one
+dir dir_two
+dir dir_three
+$ cd dir_one
+$ ls
+13000000 file_one
+$ cd ..
+$ cd dir_two
+$ ls
+19000000 file_two
+$ cd ..
+$ cd dir_three
+$ ls
+10000000 file_three

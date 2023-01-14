@@ -1,0 +1,13 @@
+77
+$ cd /
+$ ls
+dir dir_one
+dir dir_two
+7 file_at_root
+$ cd dir_one
+$ ls
+10 file1
+$ cd ..
+$ cd dir_two
+$ ls
+25 file3.txt

@@ -1,0 +1,5 @@
+55123
+$ cd /
+$ ls
+dir empty
+55123 myfile.txt
