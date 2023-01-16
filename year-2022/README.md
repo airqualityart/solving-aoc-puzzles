@@ -12,3 +12,8 @@ Notes:
   defensive programming to a minimum. For example, the solutions rely on the
   assumption that the input data files provided by _Advent of Code_ are well
   formed.
+
+* Starting with day 09's puzzle, I started using static external variables for
+  the data that must be accessed by several functions, instead of passing these
+  data as function arguments. Why? Because I feel that this approah is more
+  KISS in this case.

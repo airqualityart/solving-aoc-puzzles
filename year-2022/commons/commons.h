@@ -38,6 +38,10 @@ Notes :
 
 #define TRUE 1
 #define FALSE 0
+#define error_abort(msg) do {printf("Error (%s)!\n", msg);\
+                             fflush(stdout);\
+                             abort();}\
+                         while (FALSE)
 
 int readline(char line[], int nmaxchar, int* eof);
 /* Reads line from standard input and returns TRUE iff it is successful.

@@ -84,9 +84,9 @@ for F in $DIR_SRC/${FILE_PFX}_test-data-*.txt; do
     ANSWER_REAL=$(head -n 1 $F)
     ANSWER_CALC=$(awk 'NR > 1' $F | $FILE_EXE)
     if [ $ANSWER_CALC == $ANSWER_REAL ]; then
-	echo "    $F: OK"
+        echo "    $F: OK"
     else
-	echo "    $F: test not passed ($ANSWER_CALC instead of $ANSWER_REAL)"
+        echo "    $F: test not passed ($ANSWER_CALC instead of $ANSWER_REAL)"
     fi
 done
 echo ""
