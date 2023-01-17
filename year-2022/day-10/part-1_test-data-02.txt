@@ -1,0 +1,12 @@
+180
+addx 1
+addx 1
+addx 1
+noop
+noop
+addx 1
+addx 1
+addx 1
+addx 1
+addx 1
+addx 1

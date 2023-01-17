@@ -1,4 +1,4 @@
-/* Common ressources for my solutions to Advent of Code (r) 2022 puzzles.
+/* Solution for part 1 of day 10 of Advent of Code (r) 2022.
 
 Copyright (c) 2023, Air Quality And Related Topics.
 
@@ -34,75 +34,55 @@ Notes :
    trademark in the United States of America. See the Advent of Code website
    (https://adventofcode.com) for more information.
 
+ - See https://adventofcode.com/2022/day/10 for the description of the puzzle.
+
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "commons.h"
 
-int readline(char line[], int nmaxchar, int* eof) {
-    int c, i;
-    for (i = 0; i < nmaxchar && (c = getchar()) != '\n' && c != EOF; i++)
-	line[i] = c;
-    *eof = (c == EOF);
-    if (i == nmaxchar) {
-	line[i-1] = '\0';
-	return FALSE;
-    } else {
-	line[i] = '\0';
-	return TRUE;
+#define MAX_LINE_LENGTH 10
+
+static int reg_value = 1;
+static int current_cycle = 1;
+static int sum_signal_strength = 0;
+
+void check_cycle(void) {
+    /* Check whether the current cycle is a checkpoint. If it is, add the
+       corresponding signal strength to the total. */
+    static int checkpoints[] = {20, 60, 100, 140, 180, 220}, i_chkp = 0;
+    static const int n_chkp = sizeof(checkpoints) / sizeof(checkpoints[0]);
+    if (i_chkp < n_chkp && current_cycle == checkpoints[i_chkp]) {
+        sum_signal_strength += current_cycle * reg_value;
+        i_chkp++;
     }
 }
 
-void error_abort(char message[]) {
-    printf("\n\nError (%s)! Aborting execution...\n\n", message);
-    fflush(stdout);
-    abort();
-}
+int main() {
+    /* Print the sum of the strengths of the checkpoint signals. */
+    int eof, addx;
+    char line[MAX_LINE_LENGTH];
+    do {
 
-int prepend_c_to_string(char c, char s[], int nmaxchar) {
-    int n = strlen(s), i;
-    if (nmaxchar <= 1 || n == nmaxchar-1) return FALSE;
-    for (i = n; i >= 0; i--) s[i+1] = s[i];
-    s[0] = c;
+        if (!readline(line, MAX_LINE_LENGTH, &eof))
+            error_abort("Could not read line");
+
+        if (strlen(line) == 0)
+            continue;
+        else if (sscanf(line, "addx %d", &addx) == 1) {
+            check_cycle();
+            current_cycle++;
+            check_cycle();
+            reg_value += addx;
+            current_cycle++;
+        } else if (strcmp(line, "noop") == 0) {
+            check_cycle();
+            current_cycle++;
+        } else
+            error_abort("Unknown command.");
+
+    } while (!eof);
+    printf("%d\n", sum_signal_strength);
     return TRUE;
-}
-
-int append_c_to_string(char c, char s[], int nmaxchar) {
-    int n = strlen(s);
-    if (nmaxchar <= 1 || n == nmaxchar-1) return FALSE;
-    s[n] = c;
-    s[n+1] = '\0';
-    return TRUE;
-}
-
-void mini(int vector[], int nvalues, int *min, int* index) {
-    int i;
-    *index = 0;
-    *min = vector[0];
-    for (i = 1; i < nvalues; i++) {
-	if (vector[i] < *min) {
-	    *min = vector[i];
-	    *index = i;
-	}
-    }
-}
-
-void maxi(int vector[], int nvalues, int *max, int* index) {
-    int i;
-    *index = 0;
-    *max = vector[0];
-    for (i = 1; i < nvalues; i++) {
-	if (vector[i] > *max) {
-	    *max = vector[i];
-	    *index = i;
-	}
-    }
-}
-
-int sumi(int vector[], int nvalues) {
-    int i, sum=0;
-    for (i = 0; i < nvalues; i++) sum += vector[i];
-    return sum;
 }

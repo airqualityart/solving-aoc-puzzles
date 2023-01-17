@@ -38,13 +38,9 @@ Notes :
 
 #define TRUE 1
 #define FALSE 0
-#define error_abort(msg) do {printf("Error (%s)!\n", msg);\
-                             fflush(stdout);\
-                             abort();}\
-                         while (FALSE)
 
 int readline(char line[], int nmaxchar, int* eof);
-/* Reads line from standard input and returns TRUE iff it is successful.
+/* Read line from standard input and return TRUE iff it is successful.
 
    IN:
    - nmaxchar: maximum length of the array line, including null character. Must
@@ -56,12 +52,15 @@ int readline(char line[], int nmaxchar, int* eof);
      the null character ('\0') at the end of the line.
    - eof: TRUE iff the end of file has been reached while reading the line.
 
-   RETURNS: TRUE iff the line could be read without being truncated.
+   RETURN: TRUE iff the line could be read without being truncated.
 */
+
+void error_abort(char message[]);
+/* Print given message then abort execution. */
 
 int prepend_c_to_string(char c, char s[], int nmaxchar);
 int append_c_to_string(char c, char s[], int nmaxchar);
-/* Adds character c to the beginning or end of character string s.
+/* Add character c to the beginning or end of character string s.
 
    IN:
    - c: the character that must be added to s.
@@ -71,12 +70,12 @@ int append_c_to_string(char c, char s[], int nmaxchar);
    OUT:
    - s: the updated character string.
 
-   RETURNS: TRUE iff the character could be added successfully.
+   RETURN: TRUE iff the character could be added successfully.
  */
 
 void mini(int vector[], int nvalues, int *min, int* index);
 void maxi(int vector[], int nvalues, int *max, int* index);
-/* Seeks the minimum or maximum value (and its index) within a vector.
+/* Seek the minimum or maximum value (and its index) within a vector.
 
    IN:
    - vector: array of values to search.
@@ -91,4 +90,4 @@ void maxi(int vector[], int nvalues, int *max, int* index);
  */
 
 int sumi(int vector[], int nvalues);
-/* Returns the sum of vector, which contains nvalues. */
+/* Return the sum of vector, which contains nvalues. */
