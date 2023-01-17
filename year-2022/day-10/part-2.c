@@ -51,7 +51,8 @@ Notes :
 static int sprite = 1;
 
 void draw_pixel(void) {
-    /* Draw pixel according to current screen and sprite positions. */
+    /* Draw pixel according to current screen and sprite positions, and update
+       screen position. */
     static int screen = 0;
     printf("%c", (abs(screen-sprite) <= 1) ? PIXEL_LIT : PIXEL_DARK);
     if (++screen == CRT_WIDTH) {

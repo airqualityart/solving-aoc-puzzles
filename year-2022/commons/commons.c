@@ -44,14 +44,14 @@ Notes :
 int readline(char line[], int nmaxchar, int* eof) {
     int c, i;
     for (i = 0; i < nmaxchar && (c = getchar()) != '\n' && c != EOF; i++)
-	line[i] = c;
+        line[i] = c;
     *eof = (c == EOF);
     if (i == nmaxchar) {
-	line[i-1] = '\0';
-	return FALSE;
+        line[i-1] = '\0';
+        return FALSE;
     } else {
-	line[i] = '\0';
-	return TRUE;
+        line[i] = '\0';
+        return TRUE;
     }
 }
 
@@ -81,24 +81,22 @@ void mini(int vector[], int nvalues, int *min, int* index) {
     int i;
     *index = 0;
     *min = vector[0];
-    for (i = 1; i < nvalues; i++) {
-	if (vector[i] < *min) {
-	    *min = vector[i];
-	    *index = i;
-	}
-    }
+    for (i = 1; i < nvalues; i++)
+        if (vector[i] < *min) {
+            *min = vector[i];
+            *index = i;
+        }
 }
 
 void maxi(int vector[], int nvalues, int *max, int* index) {
     int i;
     *index = 0;
     *max = vector[0];
-    for (i = 1; i < nvalues; i++) {
-	if (vector[i] > *max) {
-	    *max = vector[i];
-	    *index = i;
-	}
-    }
+    for (i = 1; i < nvalues; i++)
+        if (vector[i] > *max) {
+            *max = vector[i];
+            *index = i;
+        }
 }
 
 int sumi(int vector[], int nvalues) {
