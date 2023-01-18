@@ -38,6 +38,7 @@ Notes :
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
 #include "commons.h"
 
@@ -102,4 +103,37 @@ int sumi(int vector[], int nvalues) {
     int i, sum = 0;
     for (i = 0; i < nvalues; i++) sum += vector[i];
     return sum;
+}
+
+int digittoi(char digit) {
+    char digit_str[2] = {'.', '\0'};
+    if (!isdigit(digit))
+        error_exit("This is not a valid digit.");
+    digit_str[0] = digit;
+    return atoi(digit_str);
+}
+
+int parse_ints(char* s, char sep, int array[], int nmax) {
+    int sepspace = isspace(sep);
+    while (isspace(*s))
+        s++;
+    if (*s == '\0')
+        return 0;
+    if (nmax < 1)
+        error_exit("Not enough room in the array.");
+    array[0] = 0;
+    do
+        array[0] = array[0]*10 + digittoi(*s);
+    while (isdigit(*++s));
+    while (isspace(*s) && (!sepspace || *s != sep))
+        s++;
+    if (*s == sep) {
+        s++;
+        while (isspace(*s))
+            s++;
+        if (!sepspace && *s == '\0')
+            error_exit("Expecting number after separator.");
+    } else if (*s != '\0')
+        error_exit("Unexpected character.");
+    return 1 + parse_ints(s, sep, ++array, nmax-1);
 }

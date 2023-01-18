@@ -91,3 +91,30 @@ void maxi(int vector[], int nvalues, int *max, int* index);
 
 int sumi(int vector[], int nvalues);
 /* Return the sum of vector, which contains nvalues. */
+
+int digittoi(char digit);
+/* Return given digit as an integer (exit with error if it is not a digit). */
+
+int parse_ints(char* s, char sep, int array[], int nmax);
+/* Parse the list of integers described by character string s and fill out
+   array accordingly.
+
+   IN:
+   - s and sep: s is a pointer to a valid, but possibly empty, character string
+     that represents a sep-separated list of integers. If the separator is not
+     a spacing character (space, tab, newline, etc.), then the separator must
+     not be repeated between numbers, and there must not be a separator before
+     the first number or after the last one. If the separator is a spacing
+     character, then it can be repeated between numbers and it can be present
+     before the first number and after the last one. In both cases, spacing
+     around separators is ignored. The following examples are valid for s:
+         "10, 20, 30, 40, 50" (sep = ',')
+         " 10 ; 20 ; 30 ; 40 ; 50 " (sep = ';')
+         "10 \n 20 \n 30 \n 40 \n 50 \n" (sep = '\n')
+     - nmax: the maximum number of values that 'array' can hold.
+
+    OUT:
+    - array: the array into which the parsed integers are put.
+
+    RETURN: the number of values added to array.
+*/
