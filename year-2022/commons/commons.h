@@ -55,8 +55,8 @@ int readline(char line[], int nmaxchar, int* eof);
    RETURN: TRUE iff the line could be read without being truncated.
 */
 
-void error_abort(char message[]);
-/* Print given message then abort execution. */
+void error_exit(char message[]);
+/* Print given message then exit with error code. */
 
 int prepend_c_to_string(char c, char s[], int nmaxchar);
 int append_c_to_string(char c, char s[], int nmaxchar);

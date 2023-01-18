@@ -69,7 +69,7 @@ void update_visited(void) {
     for (i = 0; i < n_visited; i++)
         if (visited[i][0] == xtail && visited[i][1] == ytail) return;
     if (i == MAX_LOCATIONS)
-        error_abort("Not enough space in array \"visited\"");
+        error_exit("Not enough space in array \"visited\"");
     visited[i][0] = xtail;
     visited[i][1] = ytail;
     n_visited++;
@@ -85,7 +85,7 @@ void move_other_knots(void) {
         dx = tail[0] - head[0];
         dy = tail[1] - head[1];
         if (abs(dx) > 2 || abs(dy) > 2)
-            error_abort("Knots are too far away from each other");
+            error_exit("Knots are too far away from each other");
         if (abs(dx) <= 1 && abs(dy) <= 1) {
             moved = FALSE;
             continue;
@@ -120,7 +120,7 @@ void move_rope(char direction, int n) {
         else if (direction == 'R')
             knots[0][0] += 1;
         else
-            error_abort("Unknown direction");
+            error_exit("Unknown direction");
         move_other_knots();
     }
 }
@@ -132,7 +132,7 @@ int main() {
     initialize();
     do {
         if (!readline(line, MAX_LINE_LENGTH, &eof))
-            error_abort("Could not read line");
+            error_exit("Could not read line");
         if (strlen(line) == 0)
             continue;
         sscanf(line, "%c %d", &direction, &n);

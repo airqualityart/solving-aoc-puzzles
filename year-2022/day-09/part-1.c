@@ -64,7 +64,7 @@ void update_visited(void) {
     for (i = 0; i < n_visited; i++)
         if (visited[i][0] == xtail && visited[i][1] == ytail) return;
     if (i == MAX_LOCATIONS)
-        error_abort("Not enough space in array \"visited\"");
+        error_exit("Not enough space in array \"visited\"");
     visited[i][0] = xtail;
     visited[i][1] = ytail;
     n_visited++;
@@ -88,7 +88,7 @@ void move_tail(void) {
     } else if (abs(dx) <= 1 && abs(dy) <= 1) {
         moved = FALSE;
     } else
-        error_abort("Tail is too far away from head");
+        error_exit("Tail is too far away from head");
     if (moved)
         update_visited();
 }
@@ -107,7 +107,7 @@ void move_head_and_tail(char direction, int n) {
         else if (direction == 'R')
             xhead++;
         else
-            error_abort("Unknown direction");
+            error_exit("Unknown direction");
         move_tail();
     }
 }
@@ -119,7 +119,7 @@ int main() {
     initialize_visited();
     do {
         if (!readline(line, MAX_LINE_LENGTH, &eof))
-            error_abort("Could not read line");
+            error_exit("Could not read line");
         if (strlen(line) == 0)
             continue;
         sscanf(line, "%c %d", &direction, &n);

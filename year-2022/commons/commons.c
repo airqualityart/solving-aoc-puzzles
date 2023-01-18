@@ -55,10 +55,9 @@ int readline(char line[], int nmaxchar, int* eof) {
     }
 }
 
-void error_abort(char message[]) {
-    printf("\n\nError (%s)! Aborting execution...\n\n", message);
-    fflush(stdout);
-    abort();
+void error_exit(char message[]) {
+    printf("\n\nExiting with error (%s)...\n\n", message);
+    exit(EXIT_FAILURE);
 }
 
 int prepend_c_to_string(char c, char s[], int nmaxchar) {
@@ -100,7 +99,7 @@ void maxi(int vector[], int nvalues, int *max, int* index) {
 }
 
 int sumi(int vector[], int nvalues) {
-    int i, sum=0;
+    int i, sum = 0;
     for (i = 0; i < nvalues; i++) sum += vector[i];
     return sum;
 }

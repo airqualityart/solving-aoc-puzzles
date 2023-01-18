@@ -69,7 +69,7 @@ int main() {
     do {
 
         if (!readline(line, MAX_LINE_LENGTH, &eof))
-            error_abort("Could not read line");
+            error_exit("Could not read line");
 
         if (strlen(line) == 0)
             continue;
@@ -80,7 +80,7 @@ int main() {
         } else if (strcmp(line, "noop") == 0) {
             draw_pixel();
         } else
-            error_abort("Unknown command.");
+            error_exit("Unknown command.");
 
     } while (!eof);
     return TRUE;
