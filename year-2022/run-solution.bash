@@ -55,6 +55,7 @@ fi
 
 # Compiler and its options (we choose to be very strict with the code)
 COMPILE="gcc -ansi -Wall -Wextra -Wpedantic -Werror -pedantic-errors"
+LIBS="-lm"
 
 # Directories and files
 DIR_WORK="."
@@ -66,7 +67,7 @@ FILE_EXE="$DIR_SRC/$FILE_PFX.out"
 FILE_INPUT="$DIR_SRC/${FILE_PFX}_input-data.txt"
 
 # Compile
-if ! $COMPILE -I$DIR_INC $FILE_SRC $DIR_INC/commons.c -o $FILE_EXE; then
+if ! $COMPILE -I$DIR_INC $FILE_SRC $DIR_INC/commons.c $LIBS -o $FILE_EXE; then
     echo ""
     echo ">>> There were errors during compilation."
     echo ""
