@@ -39,24 +39,28 @@ Notes :
 #define TRUE 1
 #define FALSE 0
 
+void error_exit(char message[]);
+/* Print given message then exit with error code. */
+
 int readline(char line[], int nmaxchar, int* eof);
-/* Read line from standard input and return TRUE iff it is successful.
+void getline(char line[], int nmaxchar, int* eof);
+/* Read line from standard input.
 
    IN:
    - nmaxchar: maximum length of the array line, including null character. Must
      be greater than one (unexpected behavior may happen otherwise).
 
    OUT:
-   - line: the line read from standard input (truncated if necessary). This
-     function does NOT copy the end of line character ('\n'), but it does add
-     the null character ('\0') at the end of the line.
+   - line: the line read from standard input (truncated if necessary). These
+     functions do NOT copy the end of line character ('\n'), but they do add
+     the null character ('\0') at the end of the line (even if it were
+     truncated).
    - eof: TRUE iff the end of file has been reached while reading the line.
 
-   RETURN: TRUE iff the line could be read without being truncated.
+   The function readline returns TRUE iff the line could be read without being
+   truncated (and FALSE otherwise), whereas getline exits with error if the
+   line could not be read without being truncated.
 */
-
-void error_exit(char message[]);
-/* Print given message then exit with error code. */
 
 int prepend_c_to_string(char c, char s[], int nmaxchar);
 int append_c_to_string(char c, char s[], int nmaxchar);

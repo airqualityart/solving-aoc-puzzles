@@ -42,6 +42,11 @@ Notes :
 #include <string.h>
 #include "commons.h"
 
+void error_exit(char message[]) {
+    printf("\n\nExiting with error (%s)...\n\n", message);
+    exit(EXIT_FAILURE);
+}
+
 int readline(char line[], int nmaxchar, int* eof) {
     int c, i;
     for (i = 0; i < nmaxchar && (c = getchar()) != '\n' && c != EOF; i++)
@@ -56,9 +61,9 @@ int readline(char line[], int nmaxchar, int* eof) {
     }
 }
 
-void error_exit(char message[]) {
-    printf("\n\nExiting with error (%s)...\n\n", message);
-    exit(EXIT_FAILURE);
+void getline(char line[], int nmaxchar, int* eof) {
+    if (!readline(line, nmaxchar, eof))
+        error_exit("Could not read entire line.");
 }
 
 int prepend_c_to_string(char c, char s[], int nmaxchar) {
