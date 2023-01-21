@@ -1,5 +1,9 @@
 # Do not add the binaries
 year-*/day-*/part-*.out
 
+# Do not add the test input data provided by Advent of Code (by convention, I
+# make this one the 0th test file)
+year-*/day-*/part-*_test-data-00.txt
+
 # Do not add the puzzles' actual input data
 year-*/day-*/part-*_input-data.txt
