@@ -43,7 +43,7 @@ Notes :
 #include "commons.h"
 
 void error_exit(char message[]) {
-    printf("\n\nExiting with error (%s)...\n\n", message);
+    fprintf(stderr, "\n\nExiting with error (%s)...\n\n", message);
     exit(EXIT_FAILURE);
 }
 
