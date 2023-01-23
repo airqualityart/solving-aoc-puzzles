@@ -1,4 +1,4 @@
-/* Solution for part 1 of day 13 of Advent of Code (r) 2022.
+/* Solution for part 2 of day 13 of Advent of Code (r) 2022.
 
 Copyright (c) 2023, Air Quality And Related Topics.
 
@@ -45,9 +45,12 @@ Notes :
 #include "commons.h"
 
 #define MAX_LINE_LENGTH 300
+#define MAX_PACKETS 500
 #define RIGHT_ORDER -1
 #define SAME_ORDER 0
 #define WRONG_ORDER 1
+#define DIVIDER_1 "[[2]]"
+#define DIVIDER_2 "[[6]]"
 
 typedef struct struct_packet {
     int islist;
@@ -137,23 +140,38 @@ int order(Packet *left, Packet *right) {
         return order(left, listify(right));
 }
 
+int packetcmp(const void *ptr_packet_1, const void *ptr_packet_2) {
+    /* Packet comparison function to use with standard library functions such
+       as qsort and bsearch.
+
+       When actually called back by qsort or bsearch, the two arguments will be
+       equivalent to type Packet**, so we need to dereference accordingly. */
+    return order(*(Packet**)ptr_packet_1, *(Packet**)ptr_packet_2);
+}
+
 int main() {
-    /* Print sum of the indices of all properly-ordered pairs of packets. */
-    int eof = FALSE, sum = 0, index = 0;
+    /* Print the product of the indices of both divider packets in the sorted
+        list of packets. */
+    int eof = FALSE, n_packets = 0, i, answer;
     char line[MAX_LINE_LENGTH];
-    Packet *left, *right;
+    Packet *packets[MAX_PACKETS], **pos1, **pos2;
+    Packet *div1 = parse_packet(DIVIDER_1), *div2 = parse_packet(DIVIDER_2);
+    packets[n_packets++] = div1;
+    packets[n_packets++] = div2;
     while (!eof) {
         getline(line, MAX_LINE_LENGTH, &eof);
         if (strlen(line) == 0)
             continue;
-        index++;
-        left = parse_packet(line);
-        getline(line, MAX_LINE_LENGTH, &eof);
-        right = parse_packet(line);
-        sum += (order(left, right) == RIGHT_ORDER) ? index : 0;
-        free_packet(left);
-        free_packet(right);
+        if (n_packets >= MAX_PACKETS)
+            error_exit("not enough room in array of packets");
+        packets[n_packets++] = parse_packet(line);
     }
-    printf("%d\n", sum);
+    qsort(packets, n_packets, sizeof(Packet*), *packetcmp);
+    pos1 = bsearch(&div1, packets, n_packets, sizeof(Packet*), *packetcmp);
+    pos2 = bsearch(&div2, packets, n_packets, sizeof(Packet*), *packetcmp);
+    answer = (pos1 - packets + 1) * (pos2 - packets + 1);
+    for (i = 0; i < n_packets; i++)
+        free_packet(packets[i]);
+    printf("%d\n", answer);
     return TRUE;
 }
