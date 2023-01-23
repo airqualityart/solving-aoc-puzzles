@@ -87,6 +87,14 @@ int append_c_to_string(char c, char s[], int nmaxchar) {
     return TRUE;
 }
 
+int min2i(int i, int j) {
+    return (i < j) ? i : j;
+}
+
+int max2i(int i, int j) {
+    return (i > j) ? i : j;
+}
+
 void mini(int vector[], int nvalues, int *min, int* index) {
     int i;
     *index = 0;

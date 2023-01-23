@@ -39,9 +39,6 @@ Notes :
 #define TRUE 1
 #define FALSE 0
 
-#define min(x,y) ((x < y) ? x : y)
-#define max(x,y) ((x > y) ? x : y)
-
 void error_exit(char message[]);
 /* Print given message then exit with error code. */
 
@@ -81,6 +78,10 @@ int append_c_to_string(char c, char s[], int nmaxchar);
 
    RETURN: TRUE iff the character could be added successfully.
  */
+
+int min2i(int i, int j);
+int max2i(int i, int j);
+/* Return the minimum or maximum of i and j. */
 
 void mini(int vector[], int nvalues, int *min, int* index);
 void maxi(int vector[], int nvalues, int *max, int* index);

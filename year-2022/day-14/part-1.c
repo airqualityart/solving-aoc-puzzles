@@ -55,8 +55,8 @@ static int cave[MAX_ROWS][MAX_COLS], nrows = 0, ncols = 0;
 
 void add_rock(int istart, int jstart, int iend, int jend) {
     /* Add line of rock to cave from (istart,jstart) through (iend,jend). */
-    int is = min(istart, iend), ie = max(istart, iend);
-    int js = min(jstart, jend), je = max(jstart, jend), k;
+    int is = min2i(istart, iend), ie = max2i(istart, iend);
+    int js = min2i(jstart, jend), je = max2i(jstart, jend), k;
     if (is < 0 || ie >= MAX_ROWS || js < 0 || je >= MAX_COLS)
         error_exit("negative index or cave array is too small");
     if (is == ie)
@@ -87,8 +87,8 @@ void parse_cave(void) {
                 first = FALSE;
             else
                 add_rock(istart, jstart, xy[1], xy[0]);
-            nrows = max(nrows, (istart=xy[1]) + 1);
-            ncols = max(ncols, (jstart=xy[0]) + 1);
+            nrows = max2i(nrows, (istart=xy[1]) + 1);
+            ncols = max2i(ncols, (jstart=xy[0]) + 1);
         }
     }
     /* The source must be within the bounds of the array */
