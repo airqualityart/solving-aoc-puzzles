@@ -39,11 +39,15 @@ Notes :
 #define TRUE 1
 #define FALSE 0
 
+#define min(x,y) ((x < y) ? x : y)
+#define max(x,y) ((x > y) ? x : y)
+
 void error_exit(char message[]);
 /* Print given message then exit with error code. */
 
 int readline(char line[], int nmaxchar, int* eof);
 void getline(char line[], int nmaxchar, int* eof);
+int getlinen(char line[], int nmaxchar, int* eof);
 /* Read line from standard input.
 
    IN:
@@ -59,7 +63,8 @@ void getline(char line[], int nmaxchar, int* eof);
 
    The function readline returns TRUE iff the line could be read without being
    truncated (and FALSE otherwise), whereas getline exits with error if the
-   line could not be read without being truncated.
+   line could not be read without being truncated. The function getlinen works
+   like getline but it returns the string's length.
 */
 
 int prepend_c_to_string(char c, char s[], int nmaxchar);

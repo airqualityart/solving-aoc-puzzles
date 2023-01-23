@@ -66,6 +66,11 @@ void getline(char line[], int nmaxchar, int* eof) {
         error_exit("Could not read entire line.");
 }
 
+int getlinen(char line[], int nmaxchar, int* eof) {
+    getline(line, nmaxchar, eof);
+    return strlen(line);
+}
+
 int prepend_c_to_string(char c, char s[], int nmaxchar) {
     int n = strlen(s), i;
     if (nmaxchar <= 1 || n == nmaxchar-1) return FALSE;
