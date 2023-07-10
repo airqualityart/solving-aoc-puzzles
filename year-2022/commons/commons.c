@@ -117,6 +117,14 @@ void maxi(int vector[], int nvalues, int *max, int* index) {
         }
 }
 
+int int_in_array(int i, int *array, int nvalues) {
+    int j;
+    for (j = 0; j < nvalues; j++)
+	if (array[j] == i)
+	    return TRUE;
+    return FALSE;
+}
+
 int sumi(int vector[], int nvalues) {
     int i, sum = 0;
     for (i = 0; i < nvalues; i++) sum += vector[i];

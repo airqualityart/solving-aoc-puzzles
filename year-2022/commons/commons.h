@@ -99,6 +99,9 @@ void maxi(int vector[], int nvalues, int *max, int* index);
    one.
  */
 
+int int_in_array(int i, int *array, int nvalues);
+/* Return TRUE if i is in array (which contains nvalues), FALSE otherwise. */
+
 int sumi(int vector[], int nvalues);
 /* Return the sum of vector, which contains nvalues. */
 
