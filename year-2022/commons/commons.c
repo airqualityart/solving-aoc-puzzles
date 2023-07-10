@@ -61,13 +61,13 @@ int readline(char line[], int nmaxchar, int* eof) {
     }
 }
 
-void getline(char line[], int nmaxchar, int* eof) {
+void getlinex(char line[], int nmaxchar, int* eof) {
     if (!readline(line, nmaxchar, eof))
         error_exit("Could not read entire line.");
 }
 
 int getlinen(char line[], int nmaxchar, int* eof) {
-    getline(line, nmaxchar, eof);
+    getlinex(line, nmaxchar, eof);
     return strlen(line);
 }
 

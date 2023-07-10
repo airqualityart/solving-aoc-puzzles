@@ -149,7 +149,7 @@ int packetcmp(const void *ptr_packet_1, const void *ptr_packet_2) {
     return order(*(Packet**)ptr_packet_1, *(Packet**)ptr_packet_2);
 }
 
-int main() {
+int main(void) {
     /* Print the product of the indices of both divider packets in the sorted
         list of packets. */
     int eof = FALSE, n_packets = 0, i, answer;
@@ -159,7 +159,7 @@ int main() {
     packets[n_packets++] = div1;
     packets[n_packets++] = div2;
     while (!eof) {
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (strlen(line) == 0)
             continue;
         if (n_packets >= MAX_PACKETS)

@@ -104,7 +104,7 @@ int scenic_score(int trees[MAX_ROWS][MAX_COLS], int i, int j,
     return score_left * score_right * score_up * score_down;
 }
 
-int main() {
+int main(void) {
     int i, j, n_rows, n_cols, score, max_score = 0;
     int trees[MAX_ROWS][MAX_COLS];
     if (!read_tree_grid(trees, &n_rows, &n_cols)) {

@@ -59,7 +59,7 @@ void check_cycle(void) {
     }
 }
 
-int main() {
+int main(void) {
     /* Print the sum of the strengths of the checkpoint signals. */
     int eof, addx;
     char line[MAX_LINE_LENGTH];

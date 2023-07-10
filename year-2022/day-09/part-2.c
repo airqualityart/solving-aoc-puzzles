@@ -125,7 +125,7 @@ void move_rope(char direction, int n) {
     }
 }
 
-int main() {
+int main(void) {
     /* Prints the number of locations that have been visited by the tail. */
     int eof, n;
     char line[MAX_LINE_LENGTH], direction;

@@ -44,7 +44,7 @@ Notes :
 
 #define MAX_LINE_LENGTH 20
 
-int main() {
+int main(void) {
     int eof, a, b, c, d, sum = 0;
     char line[MAX_LINE_LENGTH];
     do {

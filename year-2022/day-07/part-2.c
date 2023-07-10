@@ -112,7 +112,7 @@ int add_size_of_file(char line[MAX_STR_LENGTH],
     return TRUE;
 }
 
-int main() {
+int main(void) {
     /*
 
       Since we are exploring a file system listing, we could use some kind of

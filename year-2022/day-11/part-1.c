@@ -72,22 +72,22 @@ void parse_monkeys(void) {
     char line[MAX_LINE_LENGTH];
     Monkey *mk = monkeys;
     while (!eof) {
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (strlen(line) == 0)
             continue;
         else if (n_monkeys >= MAX_MONKEYS)
             error_exit("There is not enough room for all monkeys.");
         sscanf(line+7, "%d", &mk->index);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         mk->n_items = parse_ints(line+18, ',', mk->items, MAX_ITEMS);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (sscanf(line+23, "%c %d", &mk->operator, &mk->operand) == 1)
             mk->operand = USE_OLD;
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+21, "%d", &mk->divisible_by);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+29, "%d", mk->throw+1);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+30, "%d", mk->throw);
         mk->n_inspected = 0;
         n_monkeys++;
@@ -123,7 +123,7 @@ void play_round(void) {
         monkey_throws(monkeys+i);
 }
 
-int main() {
+int main(void) {
     /* Print the product of the numbers of items inspected by the top two
        busiest monkeys. */
     int i, first_max = -1, second_max = -2;

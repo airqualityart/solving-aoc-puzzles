@@ -137,18 +137,18 @@ int order(Packet *left, Packet *right) {
         return order(left, listify(right));
 }
 
-int main() {
+int main(void) {
     /* Print sum of the indices of all properly-ordered pairs of packets. */
     int eof = FALSE, sum = 0, index = 0;
     char line[MAX_LINE_LENGTH];
     Packet *left, *right;
     while (!eof) {
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (strlen(line) == 0)
             continue;
         index++;
         left = parse_packet(line);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         right = parse_packet(line);
         sum += (order(left, right) == RIGHT_ORDER) ? index : 0;
         free_packet(left);

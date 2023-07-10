@@ -89,7 +89,7 @@ int score_player1(int p1, int p2) {
     return score;
 }
 
-int main() {
+int main(void) {
     int eof, shape1, shape2, score = 0;
     char line[MAX_LINE_LENGTH], shape1char, shape2char;
     do {

@@ -47,7 +47,7 @@ Notes :
 #define MAX_STACKS 20
 #define MAX_STACK_HEIGHT 100
 
-int main() {
+int main(void) {
     int eof, i, j, parsing_stacks = TRUE, n, from, to;
     char c, line[MAX_LINE_LENGTH], stacks[MAX_STACKS][MAX_STACK_HEIGHT];
     for (i = 0; i < MAX_STACKS; i++) stacks[i][0] = '\0';

@@ -61,7 +61,7 @@ void draw_pixel(void) {
     }
 }
 
-int main() {
+int main(void) {
     /* Print the image described by the instructions. */
     int eof, addx;
     char line[MAX_LINE_LENGTH];

@@ -80,7 +80,7 @@ int value(char c) {
         return ERROR;
 }
 
-int main() {
+int main(void) {
     int eof, i, sum = 0, empty;
     char lines[N_LINES][MAX_LINE_LENGTH];
     do {

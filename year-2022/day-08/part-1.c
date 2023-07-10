@@ -105,7 +105,7 @@ int tree_is_visible(int trees[MAX_ROWS][MAX_COLS], int i, int j,
     return visible_left || visible_right || visible_top || visible_bottom;
 }
 
-int main() {
+int main(void) {
     int i, j, n_rows, n_cols, n_visible = 0;
     int trees[MAX_ROWS][MAX_COLS];
     if (!read_tree_grid(trees, &n_rows, &n_cols)) {

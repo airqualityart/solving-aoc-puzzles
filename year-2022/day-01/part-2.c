@@ -53,7 +53,7 @@ void update_top_carriers(int new_value, int old_values[], int nvalues) {
     if (new_value > min) old_values[imin] = new_value;
 }
 
-int main() {
+int main(void) {
     int number, sum = 0, top_carriers[N_TOP_CARRIERS], eof, i;
     char line[MAX_LINE_LENGTH];
     for (i = 0; i < N_TOP_CARRIERS; i++) top_carriers[i] = 0;

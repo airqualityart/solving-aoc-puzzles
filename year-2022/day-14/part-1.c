@@ -121,7 +121,7 @@ int drop_sand(void) {
     return FALSE;
 }
 
-int main() {
+int main(void) {
     /* Print number of sand units that stop moving before sand flows out. */
     int nrest = 0;
     parse_cave();

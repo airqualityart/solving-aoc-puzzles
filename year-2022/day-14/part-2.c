@@ -132,7 +132,7 @@ void drop_sand(void) {
     } while(moved);
 }
 
-int main() {
+int main(void) {
     /* Print number of sand unit drops needed to plug the source. */
     int ndrops = 0;
     parse_cave();

@@ -57,7 +57,7 @@ int all_different(char marker[]) {
     return TRUE;
 }
 
-int main() {
+int main(void) {
     char marker[MARKER_SIZE];
     int index = 0, counter = 0, i;
     for (i = 0; i < MARKER_SIZE; i++) marker[i] = '\0';

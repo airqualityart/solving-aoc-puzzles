@@ -108,7 +108,7 @@ int predict_shape(int shape, int outcome) {
         return SHAPE_ERROR;
 }
 
-int main() {
+int main(void) {
     int eof, shape1, shape2, score = 0;
     char line[MAX_LINE_LENGTH], shape2char, outcome;
     do {

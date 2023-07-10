@@ -75,7 +75,7 @@ int value(char c) {
         return ERROR;
 }
 
-int main() {
+int main(void) {
     int eof, sum = 0;
     char line[MAX_LINE_LENGTH];
     do {

@@ -75,7 +75,7 @@ void read_map(void) {
     char line[MAX_COLS+1], c;
     nrows = 0;
     while (!eof) {
-        getline(line, MAX_COLS+1, &eof);
+        getlinex(line, MAX_COLS+1, &eof);
         if (strlen(line) == 0)
             continue;
         ncols = strlen(line);
@@ -147,7 +147,7 @@ void calc_distances(int distances[MAX_ROWS][MAX_COLS], Location from) {
         last = check_neighbors(distances, *first++, last);
 }
 
-int main() {
+int main(void) {
     /* Print the length of the shortest path between start and end. */
     int distances[MAX_ROWS][MAX_COLS];
     read_map();

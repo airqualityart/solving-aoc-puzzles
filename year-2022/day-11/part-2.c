@@ -89,7 +89,7 @@ void parse_monkeys(void) {
     char line[MAX_LINE_LENGTH];
     Monkey *mk = monkeys;
     while (!eof) {
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (strlen(line) == 0)
             continue;
         else if (n_monkeys >= MAX_MONKEYS)
@@ -97,21 +97,21 @@ void parse_monkeys(void) {
         sscanf(line+7, "%d", &mk->index);
         if (mk->index != n_monkeys)
             error_exit("Bad monkey index in input data.");
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         mk->n_items = parse_ints(line+18, ',', items, MAX_ITEMS);
         /* For now, we store the actual worry values in all the spots; the
            simplified values will be calculated later */
         for (i = 0; i < mk->n_items; i++)
             for (j = 0; j < MAX_MONKEYS; j++)
                 mk->items[i][j] = items[i];
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         if (sscanf(line+23, "%c %d", &mk->operator, &mk->operand) == 1)
             mk->operand = USE_OLD;
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+21, "%d", &mk->divisible_by);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+29, "%d", mk->throw+1);
-        getline(line, MAX_LINE_LENGTH, &eof);
+        getlinex(line, MAX_LINE_LENGTH, &eof);
         sscanf(line+30, "%d", mk->throw);
         mk->n_inspected = 0;
         n_monkeys++;
@@ -167,7 +167,7 @@ void play_round(void) {
         monkey_throws(monkeys+i);
 }
 
-int main() {
+int main(void) {
     /* Print the product of the numbers of items inspected by the top two
        busiest monkeys. */
     int i;
