@@ -1,4 +1,4 @@
-/* Solution for part 1 of day 15 of Advent of Code (r) 2022.
+/* Solution for part 2 of day 15 of Advent of Code (r) 2022.
 
 Copyright (c) 2023, Air Quality And Related Topics.
 
@@ -44,7 +44,6 @@ Notes :
 #include "commons.h"
 
 #define MAX_LINE_LENGTH 100
-#define MAX_BEACONS 100
 #define TEMPLATE_INPUT "Sensor at x=%d, y=%d: closest beacon is at x=%d, y=%d"
 
 typedef struct struct_range {
@@ -53,13 +52,11 @@ typedef struct struct_range {
     struct struct_range *next;
 } Range;
 
-static int beacons[MAX_BEACONS], ibeacon = 0;
-
 Range *new_range(int start, int end, Range *next) {
     /* Create new range with given boundaries and next value. */
     Range *range;
     if ((range = (Range*)malloc(sizeof(Range))) == NULL)
-        error_exit("Could not allocate memory.");
+        error_exit("Could not allocate memory for individual range.");
     range->start = start;
     range->end = end;
     range->next = next;
@@ -92,39 +89,20 @@ int dist(int x1, int y1, int x2, int y2) {
     return abs(x1-x2) + abs(y1-y2);
 }
 
-void add_beacon(int x) {
-    /* Add beacon (x-coordinate given by x) to the list of beacons. */
-    if (ibeacon >= MAX_BEACONS)
-        error_exit("Not enough room for beacons.");
-    beacons[ibeacon++] = x;
-}
+int find_distress_location(Range *ranges, int xmax) {
+    /* Return distress beacon x-location if in row, negative number otherwise.
 
-Range *create_list_of_ranges(void) {
-    /* Create list of intervals where soundings say beacons cannot be.
-
-       This function also fills out variable "beacons", which keeps track of
-       the beacons that are located on the target line.
+       This function assumes that there is at most 1 possible location in row.
 
      */
-    int eof = FALSE, ytarget, xs, ys, xb, yb, delta;
-    char line[MAX_LINE_LENGTH];
-    Range *ranges=NULL;
-    getlinex(line, MAX_LINE_LENGTH, &eof);
-    if (sscanf(line, "%d", &ytarget) != 1)
-        error_exit("Could not get target y value.");
-    while (!eof) {
-        getlinex(line, MAX_LINE_LENGTH, &eof);
-        if (strlen(line) == 0)
-            continue;
-        else if (sscanf(line, TEMPLATE_INPUT, &xs, &ys, &xb, &yb) != 4)
-            error_exit("Could not parse line.");
-        delta = dist(xs, ys, xb, yb) - dist(xs, ys, xs, ytarget);
-        if (delta >= 0)
-            add_range(xs-delta, xs+delta, &ranges);
-        if (yb == ytarget && !int_in_array(xb, beacons, ibeacon))
-            add_beacon(xb);
-    }
-    return ranges;
+    if (ranges->start == 0 && ranges->end == xmax)
+        return -1;
+    else if (ranges->start == 1)
+        return 0;
+    else if (ranges->end == xmax-1)
+        return xmax;
+    else
+        return ranges->end + 1;
 }
 
 void free_ranges(Range *ranges) {
@@ -136,23 +114,55 @@ void free_ranges(Range *ranges) {
 }
 
 int main(void) {
-    /* Print number of positions along target line where beacons cannot be.
+    /* Print the tuning frequency of the distress beacon.
 
-       NB: the y-coordinate of target line is read from the first line of input
-           data.
+       NB:
+
+       - The extent of the search space (xmax, ymax) is read from the first line
+         of input data.
+
+       - Here "ranges" is an array whose elements represent rows of the search
+         space, each row being represented as a linked list of ranges.
 
      */
-    int i, n = 0;
-    Range *ranges=create_list_of_ranges(), *range;
-    range = ranges;
-    while (range != NULL) {
-        n += range->end - range->start + 1;
-        for (i = 0; i < ibeacon; i++)
-            if (beacons[i] >= range->start && beacons[i] <= range->end)
-                n -= 1;
-        range = range->next;
+    int eof = FALSE, xmax, ymax, xs, ys, xb, yb, i, d, delta;
+    char line[MAX_LINE_LENGTH];
+    Range **ranges;
+
+    /* Read extent of search space from input and allocate array of ranges */
+    getlinex(line, MAX_LINE_LENGTH, &eof);
+    if (sscanf(line, "%d %d", &xmax, &ymax) != 2)
+        error_exit("Could not get the extent of the search space.");
+    if ((ranges = (Range**)calloc(ymax+1, sizeof(Range*))) == NULL)
+        error_exit("Could not allocate memory for array of ranges.");
+    for (i = 0; i <= ymax; i++) ranges[i] = NULL;
+
+    /* Create the linked list of ranges for each row */
+    while (!eof) {
+        getlinex(line, MAX_LINE_LENGTH, &eof);
+        if (strlen(line) == 0)
+            continue;
+        else if (sscanf(line, TEMPLATE_INPUT, &xs, &ys, &xb, &yb) != 4)
+            error_exit("Could not parse line.");
+        d = dist(xs, ys, xb, yb);
+        for (i = max2i(ys-d, 0); i <= min2i(ys+d, ymax) ; i++) {
+            delta = d - dist(xs, ys, xs, i);
+            add_range(max2i(xs-delta, 0), min2i(xs+delta, xmax), ranges+i);
+        }
     }
-    free_ranges(ranges);
-    printf("%d\n", n);
+
+    /* Find the location of the distress beacon (free memory as we go) */
+    xb = -1;
+    for (i = 0; i <= ymax; i++) {
+        if (xb < 0 && (xb = find_distress_location(ranges[i], xmax)) >= 0)
+            yb = i;
+        free_ranges(ranges[i]);
+    }
+    free(ranges);
+
+    /* Compute and show the distress beacon's tuning frequency (warning: it can
+       be a very large number, hence the cast to long int) */
+    printf("%ld\n", xb*(long int)4000000 + yb);
     return TRUE;
+
 }

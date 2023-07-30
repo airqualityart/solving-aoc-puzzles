@@ -74,13 +74,21 @@ COMPILER="gcc"
 [ $# = 3 ] && COMPILER=$3
 case $COMPILER in
     gcc)
-        COMPILE="gcc -ansi -Wall -Wextra -Wpedantic -Werror -pedantic-errors";;
+        FLAGS="-ansi -Wall -Wextra -Wpedantic -Werror -pedantic-errors";;
     clang)
-        COMPILE="clang -ansi";;
+        FLAGS="-ansi";;
     *)
         message "Unknown or unsupported compiler: $COMPILER." 2;;
 esac
+if [ $COMPILER = gcc ] && [ $(/usr/bin/uname -s) = Darwin ] ; then
+    # On MacOS, the default gcc binary (/usr/bin/gcc) is in fact the clang
+    # compiler. We use gcc from Homebrew instead
+    COMPILER=$(ls -1 /opt/homebrew/bin/gcc-* | grep "^/opt/homebrew/bin/gcc-[0-9][0-9]*$")
+else
+    COMPILER=$(which $COMPILER)
+fi
 LIBS="-lm"
+message "Using compiler: $COMPILER"
 
 # Directories and files
 DIR_WORK="."
@@ -92,7 +100,7 @@ FILE_EXE="$DIR_SRC/$FILE_PFX.out"
 FILE_INPUT="$DIR_SRC/${FILE_PFX}_input-data.txt"
 
 # Compile
-$COMPILE -I$DIR_INC $FILE_SRC $DIR_INC/commons.c $LIBS -o $FILE_EXE
+$COMPILER $FLAGS -I$DIR_INC $FILE_SRC $DIR_INC/commons.c $LIBS -o $FILE_EXE
 if [ $? != 0 ] ; then
     message "There were errors during compilation." 3
 else
