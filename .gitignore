@@ -1,3 +1,6 @@
+# Ignore OS-specific files
+.DS_Store
+
 # Do not add the binaries
 year-*/day-*/part-*.out
 

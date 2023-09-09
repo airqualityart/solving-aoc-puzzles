@@ -1,0 +1,4 @@
+1660
+Valve AA has flow rate=30; tunnel leads to valve BB
+Valve BB has flow rate=20; tunnels lead to valves AA, CC
+Valve CC has flow rate=10; tunnel leads to valve BB

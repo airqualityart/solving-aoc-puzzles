@@ -8,10 +8,11 @@ Notes:
   takes care of compiling the code and running the corresponding binary while
   feeding it the proper input.
 
-* To keep the solutions as short as reasonably possible, I try to keep
-  defensive programming to a minimum. For example, the solutions rely on the
-  assumption that the input data files provided by _Advent of Code_ are well
-  formed.
+* To keep the solutions as short as reasonably possible, I try to keep defensive
+  programming to a minimum. For example, the solutions rely on the assumption
+  that the input data files provided by _Advent of Code_ are well formed and
+  that there is always a unique solution to each problem. I mostly use defensing
+  programming when parsing input data (I cannot stop myself to do so).
 
 * Starting with day 09's puzzle, I started using static external variables for
   the data that must be accessed by several functions, instead of passing these
@@ -19,8 +20,8 @@ Notes:
   KISS in this case.
 
 * Here are the 2022 puzzles that I found most interesting, along with the
-  specific programming concepts or techniques they involved (which exlain why I
-  found the puzzles interesting):
+  specific programming concepts or techniques they involved or that I chose to
+  use:
 
   - day 11, part 2:
 
@@ -32,5 +33,15 @@ Notes:
 
   - day 12: optimal path-finding.
 
-  - day 13, part 1: nested linked lists (at least that is the data
-    representation I chose), and recursion.
+  - day 13, part 1: nested linked lists and recursion.
+
+  - day 15: part 1: ordered linked lists with insertions and merges.
+
+* Here are basic style guidelines that I aim to follow:
+
+  - Indentations are 4 spaces, no tabs.
+
+  - Maximum 80 characters per line.
+
+  - It is okay to write one-liner if statements only if there is no `else if` or
+    `else` clause.
