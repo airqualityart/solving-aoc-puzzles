@@ -149,7 +149,8 @@ void fill_distances() {
 
      */
     int i, j, useful, start = valve_index(START_LOCATION);
-    for (i = 0; i < n_valves; i++)
+    for (i = 0; i < n_valves; i++) {
+        distances[i][i] = 0;
         for (j = 0; j < i; j++) {
             useful = (i == start && valves[j].flowrate > 0) ||
                      (j == start && valves[i].flowrate > 0) ||
@@ -157,22 +158,15 @@ void fill_distances() {
             if (useful)
                 distances[i][j] = distances[j][i] = shortest_distance(i, j);
         }
+    }
 }
 
 int calc_max_flow(int location, int *open_valves, int time_left) {
     /* Calculate maximum possible flow from given state. */
     int flow = 0, new_flow, i, n;
     if (time_left < 2) return 0;
-    /* First option: open the valve where we stand */
-    if (! open_valves[location]) {
-        open_valves[location] = TRUE;
-        flow = valves[location].flowrate * (time_left-1);
-        flow += calc_max_flow(location, open_valves, time_left-1);
-        open_valves[location] = FALSE;
-    }
-    /* Other options: open another valve that may be worth opening */
     for (i = 0; i < n_valves; i++) {
-        if (i == location || open_valves[i] || valves[i].flowrate == 0)
+        if (open_valves[i] || valves[i].flowrate == 0)
             continue;
         if ((n = time_left - distances[location][i] - 1) > 0) {
             open_valves[i] = TRUE;
