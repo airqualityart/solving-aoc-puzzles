@@ -1,0 +1,6 @@
+45020
+Valve BB has flow rate=0; tunnels lead to valves AA, CC, DD
+Valve DD has flow rate=0; tunnels lead to valves BB, EE
+Valve AA has flow rate=1; tunnel leads to valve BB
+Valve CC has flow rate=1000; tunnel leads to valve BB
+Valve EE has flow rate=1000; tunnel leads to valve DD

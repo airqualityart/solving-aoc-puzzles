@@ -1,4 +1,4 @@
-/* Solution for part 1 of day 16 of Advent of Code (r) 2022.
+/* Solution for part 2 of day 16 of Advent of Code (r) 2022.
 
 Copyright (c) 2023, Air Quality And Related Topics.
 
@@ -47,9 +47,10 @@ Notes :
 #define NCHAR_VALVE_NAME 2
 #define MAX_VALVES 50
 #define MAX_CONNECTIONS 5
+#define MAX_COMBINATIONS 10000
 #define VALVE_NOT_FOUND -1
 #define START_LOCATION "AA"
-#define TIMER 30
+#define TIMER 26
 
 typedef struct struct_valve {
     char name[NCHAR_VALVE_NAME+1];
@@ -62,6 +63,7 @@ typedef struct struct_valve {
 static int n_valves = 0;
 static Valve valves[MAX_VALVES];
 static int distances[MAX_VALVES][MAX_VALVES];
+static int combinations[MAX_COMBINATIONS][MAX_VALVES/2];
 
 int valve_index(char *name) {
     /* Return index of given valve in array "valves" (or VALVE_NOT_FOUND). */
@@ -161,8 +163,35 @@ void fill_distances() {
     }
 }
 
-int calc_max_flow(int location, int *open_valves, int time_left) {
-    /* Calculate maximum possible flow from given state. */
+int fill_combinations(int n, int *array, int m, int row, int col) {
+    /* Determine all ways of choosing n values among array of m values (m >= n).
+
+       Order is not relevant e.g. choice (1,2,3) is equivalent to (2,1,3). In
+       each combination, each element of the array can be chosen only once.
+
+       This function writes the results into array "combinations" (one
+       combination per line) and returns the number of such combinations.
+
+       Parameters "row" and "col" are used for recursive calls and should be
+       equal to 0 when this function is called non-recursively.
+
+     */
+    int i, j, added, total = 0;
+    for (i = 0; i <= m-n; i++) {
+        if ((added = n) > 1)
+            added = fill_combinations(n-1, array+i+1, m-i-1, row, col+1);
+        for (j = 0; j < added; j++) {
+            if (row >= MAX_COMBINATIONS)
+                error_exit("Not enough room in combination array.");
+            combinations[row++][col] = array[i];
+        }
+        total += added;
+    }
+    return total;
+}
+
+int calc_max_flow_1player(int location, int *open_valves, int time_left) {
+    /* Calculate maximum possible flow from given state (1 player only). */
     int flow = 0, new_flow, i, n;
     if (time_left < 2) return 0;
     for (i = 0; i < n_valves; i++) {
@@ -170,7 +199,8 @@ int calc_max_flow(int location, int *open_valves, int time_left) {
             continue;
         if ((n = time_left - distances[location][i] - 1) > 0) {
             open_valves[i] = TRUE;
-            new_flow = valves[i].flowrate*n + calc_max_flow(i, open_valves, n);
+            new_flow = valves[i].flowrate * n;
+            new_flow += calc_max_flow_1player(i, open_valves, n);
             open_valves[i] = FALSE;
             flow = max2i(flow, new_flow);
         }
@@ -178,14 +208,38 @@ int calc_max_flow(int location, int *open_valves, int time_left) {
     return flow;
 }
 
+int calc_max_flow_2players() {
+    /* Calculate maximum possible flow for two players. */
+    int n, n_comb, i, j, valve, n_useful = 0;
+    int start = valve_index(START_LOCATION), new_flow, flow = 0;
+    int useful_valves[MAX_VALVES], valves1[MAX_VALVES], valves2[MAX_VALVES];
+    for (i = 0; i < n_valves; i++) {
+        valves1[i] = valves2[i] = TRUE;
+        if (valves[i].flowrate > 0)
+            useful_valves[n_useful++] = i;
+    }
+    /* We attribute some valves to player 1, the others to player 2, and we try
+       all such possible combinations (we only work with useful valves) */
+    for (n = 0; n <= n_useful/2; n++) {
+        n_comb = fill_combinations(n, useful_valves, n_useful, 0, 0);
+        for (i = 0; i < n_comb; i++) {
+            for (j = 0; j < n_useful; j++) {
+                valve = useful_valves[j];
+                valves1[valve] = int_in_array(valve, combinations[i], n);
+                valves2[valve] = ! valves1[valve];
+            }
+            new_flow = calc_max_flow_1player(start, valves1, TIMER) +
+                       calc_max_flow_1player(start, valves2, TIMER);
+            flow = max2i(flow, new_flow);
+        }
+    }
+    return flow;
+}
+
 int main(void) {
-    /* Print the maximum flow that we can obtain in given time. */
-    int i, flow;
-    int open_valves[MAX_VALVES];
+    /* Print the maximum flow that we can obtain in given time (2 players). */
     parse_input();
     fill_distances();
-    for (i = 0; i < n_valves; i++) open_valves[i] = FALSE;
-    flow = calc_max_flow(valve_index(START_LOCATION), open_valves, TIMER);
-    printf("%d\n", flow);
+    printf("%d\n", calc_max_flow_2players());
     return TRUE;
 }

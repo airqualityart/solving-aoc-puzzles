@@ -37,6 +37,12 @@ Notes:
 
   - day 15: part 1: ordered linked lists with insertions and merges.
 
+  - day 16:
+
+     * part 1: recursion and shortest path.
+
+     * part 2: combinatorics.
+
 * Here are basic style guidelines that I aim to follow:
 
   - Indentations are 4 spaces, no tabs.
