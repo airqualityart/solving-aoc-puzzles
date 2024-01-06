@@ -10,3 +10,7 @@ year-*/day-*/part-*_test-data-00.txt
 
 # Do not add the puzzles' actual input data
 year-*/day-*/part-*_input-data.txt
+
+# Do not add PDF printouts of puzzle statements, which I sometimes use to work
+# on the puzzles while offline
+year-*/day-*/part-*.pdf

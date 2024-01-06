@@ -3,7 +3,7 @@ I had not used C in a long time, so I decided to use this language to solve the
 
 Notes:
 
-* My solutions read the puzzles' inputs from stdin. The script
+* My solutions read the puzzles' input data from stdin. The script
   [run-solution.bash](https://github.com/airqualityart/solving-aoc-puzzles/blob/main/year-2022/run-solution.bash)
   takes care of compiling the code and running the corresponding binary while
   feeding it the proper input.
@@ -16,8 +16,7 @@ Notes:
 
 * Starting with day 09's puzzle, I started using static external variables for
   the data that must be accessed by several functions, instead of passing these
-  data as function arguments. Why? Because I feel that this approah is more
-  KISS in this case.
+  data as function arguments (KISS).
 
 * Here are the 2022 puzzles that I found most interesting, along with the
   specific programming concepts or techniques they involved or that I chose to
@@ -49,5 +48,7 @@ Notes:
 
   - Maximum 80 characters per line.
 
-  - It is okay to write one-liner if statements only if there is no `else if` or
-    `else` clause.
+  - It is okay to write one-liner `for` and `while` loops.
+
+  - It is okay to write one-liner `if` statements only if there is no `else if`
+    or `else` clause.
