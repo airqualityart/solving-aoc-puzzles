@@ -1,0 +1,6 @@
+85
+cccc: abcd + bbbb
+abcd: 10
+bbbb: 5
+root: dddd - cccc
+dddd: 100
