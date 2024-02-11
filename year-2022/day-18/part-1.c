@@ -1,6 +1,6 @@
 /* Solution for part 1 of day 18 of Advent of Code (r) 2022.
 
-Copyright (c) 2023-now, Air Quality And Related Topics.
+Copyright (c) 2023-2024, Air Quality And Related Topics.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
