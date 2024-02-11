@@ -95,25 +95,19 @@ void spread_status(int status, int x, int y, int z) {
         spread_status(status, x, y, z+1);
 }
 
-int count_outfacing_faces() {
+int count_outfacing_faces(void) {
     /* Return the number of faces exposed to the outside. */
     int x, y, z, sum = 0;
     for (x = 0; x < MAX_X; x++)
         for (y = 0; y < MAX_Y; y++)
             for (z = 0; z < MAX_Z; z++) {
                 if (grid[x][y][z] != LAVACUBE) continue;
-                if (grid[x-1][y][z] == OUTSIDE)
-                    sum += 1;
-                if (grid[x+1][y][z] == OUTSIDE)
-                    sum += 1;
-                if (grid[x][y-1][z] == OUTSIDE)
-                    sum += 1;
-                if (grid[x][y+1][z] == OUTSIDE)
-                    sum += 1;
-                if (grid[x][y][z-1] == OUTSIDE)
-                    sum += 1;
-                if (grid[x][y][z+1] == OUTSIDE)
-                    sum += 1;
+                sum += ((grid[x-1][y][z] == OUTSIDE ? 1 : 0) + \
+                        (grid[x+1][y][z] == OUTSIDE ? 1 : 0) + \
+                        (grid[x][y-1][z] == OUTSIDE ? 1 : 0) + \
+                        (grid[x][y+1][z] == OUTSIDE ? 1 : 0) + \
+                        (grid[x][y][z-1] == OUTSIDE ? 1 : 0) + \
+                        (grid[x][y][z+1] == OUTSIDE ? 1 : 0));
                 }
     return sum;
 }

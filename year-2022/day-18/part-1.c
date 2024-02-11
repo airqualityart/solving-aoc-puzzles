@@ -1,6 +1,6 @@
 /* Solution for part 1 of day 18 of Advent of Code (r) 2022.
 
-Copyright (c) 2023, Air Quality And Related Topics.
+Copyright (c) 2023-now, Air Quality And Related Topics.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -47,51 +47,45 @@ Notes :
 #define MAX_Y 25
 #define MAX_Z 25
 
-enum {LEFT, RIGHT, FRONT, BACK, BOTTOM, TOP, N_FACES};
-static int grid[MAX_X][MAX_Y][MAX_Z][N_FACES];
+enum {EMPTY, LAVACUBE};
+static int grid[MAX_X][MAX_Y][MAX_Z];
 
 void init_grid(void) {
-    /* Initialize grid (make it empty). */
-    int x, y, z, face;
+    /* Initialize grid. */
+    int x, y, z;
     for (x = 0; x < MAX_X; x++)
         for (y = 0; y < MAX_Y; y++)
             for (z = 0; z < MAX_Z; z++)
-                for (face = 0; face < N_FACES; face++)
-                    grid[x][y][z][face] = 0;
+                grid[x][y][z] = EMPTY;
 }
 
 void add_cube(int x, int y, int z) {
-    /* Add cube at position (x,y,z) to the grid. */
-    int face;
-    if (x < 0 || x >= MAX_X) error_exit("Invalid x coord or grid too small.");
-    if (y < 0 || y >= MAX_Y) error_exit("Invalid y coord or grid too small.");
-    if (z < 0 || z >= MAX_Z) error_exit("Invalid z coord or grid too small.");
-    for (face = 0; face < N_FACES; face++) grid[x][y][z][face] = 1;
-    /* Check for adjacent cubes in the x-direction (left/right) */
-    if (x > 0 && grid[x-1][y][z][RIGHT] >= 1)
-        grid[x][y][z][LEFT] = grid[x-1][y][z][RIGHT] = 2;
-    if (x < MAX_X-1 && grid[x+1][y][z][LEFT] >= 1)
-        grid[x][y][z][RIGHT] = grid[x+1][y][z][LEFT] = 2;
-    /* Check for adjacent cubes in the y-direction (front/back) */
-    if (y > 0 && grid[x][y-1][z][BACK] >= 1)
-        grid[x][y][z][FRONT] = grid[x][y-1][z][BACK] = 2;
-    if (y < MAX_Y-1 && grid[x][y+1][z][FRONT] >= 1)
-        grid[x][y][z][BACK] = grid[x][y+1][z][FRONT] = 2;
-    /* Check for adjacent cubes in the z-direction (bottom/top) */
-    if (z > 0 && grid[x][y][z-1][TOP] >= 1)
-        grid[x][y][z][BOTTOM] = grid[x][y][z-1][TOP] = 2;
-    if (z < MAX_Z-1 && grid[x][y][z+1][BOTTOM] >= 1)
-        grid[x][y][z][TOP] = grid[x][y][z+1][BOTTOM] = 2;
+    /* Add cube at position (x,y,z) to the grid.
+
+       My solution relies on the fact that the "enveloppe" of the grid is free
+       of lava cubes, so we arrange and check for that here.
+
+     */
+    if (++x < 1 || x > MAX_X-2) error_exit("Grid too small (x).");
+    if (++y < 1 || y > MAX_Y-2) error_exit("Grid too small (y).");
+    if (++z < 1 || z > MAX_Z-2) error_exit("Grid too small (z).");
+    grid[x][y][z] = LAVACUBE;
 }
 
 int count_exposed_faces(void) {
     /* Return the number of exposed faces. */
-    int x, y, z, face, sum = 0;
+    int x, y, z, sum = 0;
     for (x = 0; x < MAX_X; x++)
         for (y = 0; y < MAX_Y; y++)
-            for (z = 0; z < MAX_Z; z++)
-                for (face = 0; face < N_FACES; face++)
-                    if (grid[x][y][z][face] == 1) sum += 1;
+            for (z = 0; z < MAX_Z; z++) {
+                if (grid[x][y][z] != LAVACUBE) continue;
+                sum += ((grid[x-1][y][z] == EMPTY ? 1 : 0) + \
+                        (grid[x+1][y][z] == EMPTY ? 1 : 0) + \
+                        (grid[x][y-1][z] == EMPTY ? 1 : 0) + \
+                        (grid[x][y+1][z] == EMPTY ? 1 : 0) + \
+                        (grid[x][y][z-1] == EMPTY ? 1 : 0) + \
+                        (grid[x][y][z+1] == EMPTY ? 1 : 0));
+            }
     return sum;
 }
 
